@@ -16,12 +16,11 @@ namespace Catalog.API.Products.CreateProduct
             RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must be greater than zero.");
         }
     }
-    internal class CreateProductHandler(IDocumentSession session , ILogger<CreateProductHandler> logger) :
+    internal class CreateProductHandler(IDocumentSession session) :
         ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Handling CreateProductCommand for product: {Name}", command.Name);
             var product = new Product
             {
                 Name = command.Name,
@@ -31,7 +30,6 @@ namespace Catalog.API.Products.CreateProduct
                 Price = command.Price
             };
 
-            // ToDo Save In Database
             session.Store(product);
             await session.SaveChangesAsync(cancellationToken);
 
