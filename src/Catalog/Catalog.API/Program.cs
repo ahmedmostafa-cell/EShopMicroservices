@@ -1,12 +1,21 @@
+using BuildingBlocks.Behaviors;
+using FluentValidation;
+
 var builder = WebApplication.CreateBuilder(args);
 
 //Add services to contianier
-builder.Services.AddCarter();
+var assembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(config =>
 {
-    config.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    config.RegisterServicesFromAssembly(assembly);
+    config.AddOpenBehavior(typeof(ValidationBehaviors<,>));
 
 });
+
+builder.Services.AddValidatorsFromAssembly(assembly);
+builder.Services.AddCarter();
+
+
 builder.Services.AddMarten(options =>
 {
     options.Connection(builder.Configuration.GetConnectionString("Database")!);

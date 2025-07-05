@@ -5,6 +5,7 @@ namespace Catalog.API.Products.DeleteProduct
 {
     public record DeleteProductCommand(Guid Id) : IQuery<DeleteProductResult>;
     public record DeleteProductResult(bool IsSuccess);
+
     internal class DeleteProductHandler(IDocumentSession session, ILogger<DeleteProductHandler> logger)
         : IQueryHandler<DeleteProductCommand, DeleteProductResult>
     {
