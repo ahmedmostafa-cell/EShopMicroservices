@@ -1,5 +1,4 @@
-using BuildingBlocks.Behaviors;
-using FluentValidation;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,9 +20,15 @@ builder.Services.AddMarten(options =>
     options.Connection(builder.Configuration.GetConnectionString("Database")!);
 })
 .UseLightweightSessions();
+
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 //Configure http request pipeline
 app.MapCarter();
+
+app.UseExceptionHandler(options => { });
+
 
 app.Run();
