@@ -1,4 +1,6 @@
-﻿namespace Basket.API.Basket.DeleteBasket
+﻿using Basket.API.Data;
+
+namespace Basket.API.Basket.DeleteBasket
 {
     public record DeleteBasketCommand(string UserName) : IQuery<DeleteBasketResult>;
     public record DeleteBasketResult(bool IsSuccess);
@@ -11,21 +13,17 @@
         }
     }
 
-    internal class DeleteBasketHandler(IDocumentSession session)
+    internal class DeleteBasketHandler(IBasketRepository basketRepository)
         : IQueryHandler<DeleteBasketCommand, DeleteBasketResult>
     {
         public async Task<DeleteBasketResult> Handle(DeleteBasketCommand command,
             CancellationToken cancellationToken)
         {
-            //var basket = await session.LoadAsync<ShoppingCart>(command.UserName, cancellationToken);
-            //if (basket is null)
-            //{
-            //    throw new BasketNotFoundException(command.UserName);
-            //}
-            //session.Delete<ShoppingCart>(command.UserName);
-            //await session.SaveChangesAsync(cancellationToken);
+            var result = await basketRepository.DeleteBasket(command.UserName, 
+                cancellationToken);
+                
 
-            return new DeleteBasketResult(true);
+            return new DeleteBasketResult(result);
         }
     }
 }
