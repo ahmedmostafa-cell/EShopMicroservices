@@ -9,7 +9,7 @@
         public StoreBasketCommandValidator()
         {
             RuleFor(x => x.Cart).NotNull().WithMessage("Cart Can Not Be nULL.");
-            //RuleFor(x => x.Cart.UserName).NotEmpty().WithMessage("UserName is required.");
+            RuleFor(x => x.Cart.UserName).NotEmpty().WithMessage("UserName is required.");
         }
     }
     internal class StoreBasketHandler(IDocumentSession session) :
