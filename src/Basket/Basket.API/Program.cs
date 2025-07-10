@@ -1,3 +1,4 @@
+
 var builder = WebApplication.CreateBuilder(args);
 
 //Add services to contianier
@@ -28,6 +29,8 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
+
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 var app = builder.Build();
 
