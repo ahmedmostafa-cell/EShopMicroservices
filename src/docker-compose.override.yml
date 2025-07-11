@@ -23,7 +23,14 @@ services:
    - "5433:5432"
   volumes:
    -  postgres_basket:/var/lib/postgresql/data
+ 
 
+ distributedcash:
+  container_name: distributedcash
+  restart: always
+  ports:
+   - "6379:6379"
+ 
 
  catalog.api:
   environment:
@@ -50,9 +57,11 @@ services:
    - ASPNETCORE_HTTP_PORTS=8080
    - ASPNETCORE_HTTPS_PORTS=8081
    - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=basketdb;User Id=postgres;Password=postgres;Include Error Detail=True
+   - ConnectionStrings__Redis=distributedcash:6379
 
   depends_on:
-   - basketdb 
+   - basketdb
+   - distributedcash
   ports:
    - "6001:8080"
    - "6061:8081"

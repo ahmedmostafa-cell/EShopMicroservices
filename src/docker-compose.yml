@@ -4,6 +4,9 @@ services:
 
  basketdb:
   image: postgres
+
+ distributedcash:
+  image: redis
   
  catalog.api:
   image: ${DOCKER_REGISTRY-}catalogapi
