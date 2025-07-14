@@ -1,7 +1,7 @@
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Add services to contianier
+//Application Services
 var assembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(config =>
 {
@@ -10,11 +10,10 @@ builder.Services.AddMediatR(config =>
     config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 
 });
-
 builder.Services.AddValidatorsFromAssembly(assembly);
 builder.Services.AddCarter();
 
-
+//Data Services
 builder.Services.AddMarten(options =>
 {
     options.Connection(builder.Configuration.GetConnectionString("Database")!);
@@ -22,23 +21,35 @@ builder.Services.AddMarten(options =>
        
 })
 .UseLightweightSessions();
-
-
-
-builder.Services.AddExceptionHandler<CustomExceptionHandler>();
-
-builder.Services.AddHealthChecks()
-    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
-    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
-
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.Decorate<IBasketRepository, CashedRepository>();
-
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis")!;
     //options.InstanceName = "BasketInstance";
 });
+
+// GRPC Services
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration.GetValue<string>("GrpcSettings:DiscountUrl")!);
+})
+.ConfigurePrimaryHttpMessageHandler(() =>
+{
+   var handler = new HttpClientHandler
+   {
+       ServerCertificateCustomValidationCallback =
+              HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+   };
+
+    return handler;
+});
+
+// Cross-Cutting Services
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
 
 var app = builder.Build();
 

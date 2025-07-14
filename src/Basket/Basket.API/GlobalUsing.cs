@@ -14,3 +14,4 @@ global using BuildingBlocks.Exceptions;
 global using Basket.API.Data;
 global using Microsoft.Extensions.Caching.Distributed;
 global using System.Text.Json;
+global using Discount.Grpc;
