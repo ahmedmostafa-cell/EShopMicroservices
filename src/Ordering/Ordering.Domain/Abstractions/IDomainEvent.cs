@@ -1,5 +1,4 @@
-﻿using MediatR;
-
+﻿
 namespace Ordering.Domain.Abstractions;
 
 public class IDomainEvent :INotification
