@@ -1,4 +1,8 @@
-﻿namespace Ordering.Domain.ValueObjects;
+﻿using System.Diagnostics.Metrics;
+using System.Net.Mail;
+using System.Reflection.Emit;
+
+namespace Ordering.Domain.ValueObjects;
 
 public record Payment
 {
@@ -8,5 +12,27 @@ public record Payment
     public string CVV { get; } = default!;
     public string PaymentMethod { get; } = default!;
 
+	protected Payment() { }
+
+	private Payment(string cardName, string cardNumber, string expiration,
+		string cVV, string paymentMethod)
+	{
+		CardName = cardName;
+		CardNumber = cardNumber;
+		Expiration = expiration;
+		CVV = cVV;
+		PaymentMethod = paymentMethod;
+	}
+
+	public static Payment Of(string cardName, string cardNumber, string expiration,
+		string cVV, string paymentMethod)
+	{
+		ArgumentNullException.ThrowIfNullOrWhiteSpace(cardName);
+		ArgumentNullException.ThrowIfNullOrWhiteSpace(cardNumber);
+		ArgumentNullException.ThrowIfNullOrWhiteSpace(cVV);
+		ArgumentOutOfRangeException.ThrowIfGreaterThan(cVV.Length , 3);
+
+		return new Payment(cardName, cardNumber, expiration, cVV, paymentMethod);
+	}
 
 }

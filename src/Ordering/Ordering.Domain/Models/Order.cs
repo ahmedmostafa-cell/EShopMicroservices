@@ -1,5 +1,7 @@
 ﻿
 
+using Ordering.Domain.ValueObjects;
+
 namespace Ordering.Domain.Models;
 
 public class Order : Aggregate<OrderId>
@@ -16,6 +18,57 @@ public class Order : Aggregate<OrderId>
     {
         get => _items.Sum(item => item.Price * item.Quantity);
         private set { } 
-    } 
+    }
+
+	public static Order Create(OrderId id, CustomerId customerId, OrderName orderName , 
+        Address shippingAddress , Address billingAddress , Payment payment , OrderStatus status)
+	{
+        var order = new Order
+        {
+            Id = id,
+			CustomerId = customerId,
+			OrderName = orderName,
+			ShippingAddress = shippingAddress,
+			BillingAddress = billingAddress,
+			Payment = payment,
+			Status= status
+		};
+
+        order.AddDomainEvent(new OrderCreateEvent(order));
+
+        return order;
+	}
+
+    public void Update(OrderName orderName,
+		Address shippingAddress, Address billingAddress, Payment payment, OrderStatus status) 
+    {
+        OrderName = orderName;
+        ShippingAddress = shippingAddress;
+        BillingAddress = billingAddress;
+        Payment = payment;
+		Status = status;
+
+		AddDomainEvent(new OrderUpdatedEvent(this));
+	}
+
+    public void Add(OrderId orderId, ProductID productID, decimal price, int quantity) 
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
+
+		var orderItem = new OrderItem(orderId, productID, price, quantity);
+
+        _items.Add(orderItem);
+	}
+
+    public void Remove(ProductID productId) 
+    {
+        var orderItem = _items.FirstOrDefault(a => a.ProductID == productId);
+        if(orderItem is not null) 
+        {
+			_items.Remove(orderItem);
+		}
+
+	}
 
 }
