@@ -11,3 +11,4 @@ global using Ordering.Domain.Abstractions;
 global using Microsoft.EntityFrameworkCore.ChangeTracking;
 global using Ordering.Infrastructure.Data.Interceptors;
 global using MediatR;
+global using System.Collections.Generic;
