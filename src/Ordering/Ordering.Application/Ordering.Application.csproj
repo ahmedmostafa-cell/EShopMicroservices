@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Orders\Queries\GetOrdersByCustomer\**" />
     <Compile Remove="Orders\Queries\GetOrders\**" />
-    <EmbeddedResource Remove="Orders\Queries\GetOrdersByCustomer\**" />
     <EmbeddedResource Remove="Orders\Queries\GetOrders\**" />
-    <None Remove="Orders\Queries\GetOrdersByCustomer\**" />
     <None Remove="Orders\Queries\GetOrders\**" />
   </ItemGroup>
 
