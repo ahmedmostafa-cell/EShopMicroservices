@@ -7,13 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj" />
-    <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
+    <Compile Remove="Orders\Queries\GetOrdersByCustomer\**" />
+    <Compile Remove="Orders\Queries\GetOrders\**" />
+    <EmbeddedResource Remove="Orders\Queries\GetOrdersByCustomer\**" />
+    <EmbeddedResource Remove="Orders\Queries\GetOrders\**" />
+    <None Remove="Orders\Queries\GetOrdersByCustomer\**" />
+    <None Remove="Orders\Queries\GetOrders\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Orders\Queries\GetOrders\" />
-    <Folder Include="Orders\Queries\GetOrdersByCustomer\" />
+    <ProjectReference Include="..\..\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj" />
+    <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
