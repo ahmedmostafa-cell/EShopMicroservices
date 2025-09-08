@@ -1,4 +1,6 @@
-﻿namespace Ordering.Application.Orders.Queries.GetOrdersByName;
+﻿using Ordering.Application.Extensions;
+
+namespace Ordering.Application.Orders.Queries.GetOrdersByName;
 
 public class GetOrderByNameHandler(IApplicationDbContext dbContext)
     : IQueryHandler<GetOrderByNameQuery, GetOrderByNameResult>
@@ -14,52 +16,7 @@ public class GetOrderByNameHandler(IApplicationDbContext dbContext)
             .OrderBy(a=> a.OrderName)
             .ToListAsync(cancellationToken);
 
-        var ordersDto =ProjectToOrderDto(orders);
-
-        return new GetOrderByNameResult(ordersDto);
+        return new GetOrderByNameResult(orders.ToOrderDtosList());
     }
-    private  List<OrderDto> ProjectToOrderDto(List<Order> orders)
-    {
-        List<OrderDto> result = new();
-        foreach (var order in orders) 
-        {
-            OrderDto orderDto = new(
-                Id :order.Id.Value,
-                CustomerId : order.CustomerId.Value,
-                OrderName: order.OrderName.Value,
-                ShippingAddress : new AddressDto(
-                    order.ShippingAddress.FirstName, 
-                    order.ShippingAddress.LastName, 
-                    order.ShippingAddress.EmailAddress, 
-                    order.ShippingAddress.AddressLine , 
-                    order.ShippingAddress.Country , 
-                    order.ShippingAddress.State , 
-                    order.ShippingAddress.ZipCode),
-                BillingAddress: new AddressDto(
-                    order.ShippingAddress.FirstName, 
-                    order.ShippingAddress.LastName, 
-                    order.ShippingAddress.EmailAddress, 
-                    order.ShippingAddress.AddressLine, 
-                    order.ShippingAddress.Country, 
-                    order.ShippingAddress.State, 
-                    order.ShippingAddress.ZipCode),
-                Payment:new PaymentDto(
-                    order.Payment.CardName, 
-                    order.Payment.CardNumber, 
-                    order.Payment.Expiration , 
-                    order.Payment.CVV , 
-                    order.Payment.PaymentMethod),
-                Status:order.Status,
-                OrderItems:order.Items.Select(item => new OrderItemDto(
-                    item.OrderId.Value , 
-                    item.ProductID.Value, 
-                    item.Quantity , 
-                    item.Price)).ToList()
-            );
-
-            result.Add(orderDto);
-        }
-
-        return result;
-    }
+    
 }
