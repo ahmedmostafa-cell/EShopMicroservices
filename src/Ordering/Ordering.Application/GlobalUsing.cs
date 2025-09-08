@@ -10,3 +10,7 @@ global using FluentValidation;
 global using Ordering.Domain.ValueObjects;
 global using Ordering.Application.Exception;
 global using BuildingBlocks.Exceptions;
+global using MediatR;
+global using Ordering.Domain.Events;
+global using Microsoft.Extensions.Logging;
+global using Mapster;
