@@ -15,3 +15,4 @@ global using Ordering.Domain.Events;
 global using Microsoft.Extensions.Logging;
 global using Mapster;
 global using Ordering.Application.Extensions;
+global using BuildingBlocks.Pagination;
