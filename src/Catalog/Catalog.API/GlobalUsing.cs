@@ -10,6 +10,6 @@ global using BuildingBlocks.Behaviors;
 global using BuildingBlocks.Handler;
 global using Catalog.API.Data;
 global using Marten.Pagination;
-
+global using static System.Net.Mime.MediaTypeNames;
 
 
