@@ -5,14 +5,14 @@ public class UpdateOrderHandler(IApplicationDbContext dbContext)
 {
     public async Task<UpdateOrderResult> Handle(UpdateOrderCommand command, CancellationToken cancellationToken)
     {
-        var orderId = OrderId.Of(command.Order.Id);
+        var orderId = OrderId.Of(command.OrderDto.Id);
         var existingOrder = await dbContext.Orders
             .FindAsync([orderId], cancellationToken);
         if (existingOrder is null) 
         {
-            throw new OrderNotFoundException(command.Order.Id);
+            throw new OrderNotFoundException(command.OrderDto.Id);
         }
-        UpdateOrderWithNewValue(existingOrder,command.Order);
+        UpdateOrderWithNewValue(existingOrder,command.OrderDto);
         dbContext.Orders.Update(existingOrder);
         await dbContext.SaveChangesAsync(cancellationToken);
 

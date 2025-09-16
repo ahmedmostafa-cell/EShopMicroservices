@@ -6,7 +6,7 @@ public class CreateOrderHandler(IApplicationDbContext dbContext)
 {
     public async Task<CreateOrderResult> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
     {
-        var order = CreateNewOrder(command.Order);
+        var order = CreateNewOrder(command.OrderDto);
         await dbContext.Orders.AddAsync(order, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
         return new CreateOrderResult(order.Id.Value);
