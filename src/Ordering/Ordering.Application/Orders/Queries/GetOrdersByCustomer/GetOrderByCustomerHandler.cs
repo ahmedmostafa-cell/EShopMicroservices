@@ -10,7 +10,7 @@ public class GetOrderByCustomerHandler(IApplicationDbContext dbContext)
 			.Include(a => a.Items)
 			.AsNoTracking()
 			.Where(a => a.CustomerId == CustomerId.Of(query.Customer.Value))
-			.OrderBy(a => a.OrderName)
+			.OrderBy(a => a.OrderName.Value)
 			.ToListAsync(cancellationToken);
 
 		return new GetOrderByCustomerResult(orders.ToOrderDtosList());

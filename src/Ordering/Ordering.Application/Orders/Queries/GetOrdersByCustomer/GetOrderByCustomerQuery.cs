@@ -3,4 +3,4 @@
 public record GetOrderByCustomerQuery(CustomerId Customer)
 	: IQuery<GetOrderByCustomerResult>;
 
-public record GetOrderByCustomerResult(IEnumerable<OrderDto> orders);
+public record GetOrderByCustomerResult(IEnumerable<OrderDto> Orders);

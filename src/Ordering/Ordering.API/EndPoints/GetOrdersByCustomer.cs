@@ -2,7 +2,7 @@
 
 //public record GetOrderByCustomerRequest(Guid customerID);
 
-public record GetOrderByCustomerResponse(IEnumerable<OrderDto> orders);
+public record GetOrderByCustomerResponse(IEnumerable<OrderDto> Orders);
 
 public class GetOrdersByCustomer : ICarterModule
 {

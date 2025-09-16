@@ -11,7 +11,7 @@ public class GetOrderByNameHandler(IApplicationDbContext dbContext)
             .Include(a=> a.Items)
             .AsNoTracking()
             .Where(a=> a.OrderName.Value.Contains(query.Name))
-            .OrderBy(a=> a.OrderName)
+            .OrderBy(a=> a.OrderName.Value)
             .ToListAsync(cancellationToken);
 
         return new GetOrderByNameResult(orders.ToOrderDtosList());
