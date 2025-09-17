@@ -15,6 +15,8 @@ global using BuildingBlocks.Pagination;
 global using Ordering.Application.Orders.Queries.GetOrders;
 global using Ordering.Application.Orders.Queries.GetOrdersByName;
 global using BuildingBlocks.Handler;
+global using HealthChecks.UI.Client;
+global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 
 
