@@ -73,7 +73,9 @@ namespace BuildingBlocks.Handler
                 problemDetails.Extensions.Add("errors", validationException.Errors);
             }
 
-            await context.Response.WriteAsJsonAsync(problemDetails,
+			context.Response.StatusCode = details.StatusCode;
+
+			await context.Response.WriteAsJsonAsync(problemDetails,
                 new JsonSerializerOptions(),
                 "application/problem+json", cancellationToken);
 

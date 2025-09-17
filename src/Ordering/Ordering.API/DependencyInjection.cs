@@ -1,21 +1,22 @@
-﻿
-namespace Ordering.API
-{
+﻿namespace Ordering.API;
+
     public static class DependencyInjection
     {
         public static IServiceCollection AddAPInServices(
             this IServiceCollection services)
         {
             services.AddCarter();
+		services.AddExceptionHandler<CustomExceptionHandler>();
 
-            return services;
+		return services;
         }
 
         public static WebApplication UseAPInServices(
             this WebApplication app)
         {
             app.MapCarter();
-            return app;
+		app.UseExceptionHandler(options => { });
+
+		return app;
         }
     } 
-}
