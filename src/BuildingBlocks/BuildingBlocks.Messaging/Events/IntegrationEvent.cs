@@ -1,6 +1,6 @@
 ﻿namespace BuildingBlocks.Messaging.Events;
 
-public class IntegrationEvent
+public record IntegrationEvent
 {
 	public Guid Id => Guid.NewGuid();
 	public DateTime OccuredOn => DateTime.Now;

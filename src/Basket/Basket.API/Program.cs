@@ -1,4 +1,3 @@
-
 var builder = WebApplication.CreateBuilder(args);
 
 //Application Services
@@ -44,6 +43,8 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 
     return handler;
 });
+
+builder.Services.AddMessageBroker(builder.Configuration);
 
 // Cross-Cutting Services
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
