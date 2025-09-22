@@ -1,11 +1,9 @@
-﻿using BuildingBlocks.Behaviors;
-
-namespace Ordering.Application;
+﻿namespace Ordering.Application;
 
 public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices(
-        this IServiceCollection services)
+        this IServiceCollection services , IConfiguration configuration )
     {
         services.AddMediatR(config =>
         {
@@ -14,6 +12,8 @@ public static class DependencyInjection
             config.AddOpenBehavior(typeof(LoggingBehavior<,>));
         });
 
-        return services;
+		services.AddMessageBroker(configuration , Assembly.GetExecutingAssembly());
+
+		return services;
     }
 }

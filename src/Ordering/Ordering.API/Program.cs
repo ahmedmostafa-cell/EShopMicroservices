@@ -1,6 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 builder.Services
-		 .AddApplicationServices()
+		 .AddApplicationServices(builder.Configuration)
 		 .AddInfrastructure(builder.Configuration)
 		 .AddAPInServices(builder.Configuration);
 
