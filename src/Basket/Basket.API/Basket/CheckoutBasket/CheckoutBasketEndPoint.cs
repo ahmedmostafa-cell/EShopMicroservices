@@ -1,6 +1,4 @@
-﻿using Basket.API.Dtos;
-
-namespace Basket.API.Basket.CheckoutBasket;
+﻿namespace Basket.API.Basket.CheckoutBasket;
 
 public record CheckoutBasketRequest(BasketCheckoutDto BasketCheckoutDto);  
 public record CheckoutBasketResponse(bool IsSuccess);
@@ -8,6 +6,17 @@ public class CheckoutBasketEndPoint : ICarterModule
 {
 	public void AddRoutes(IEndpointRouteBuilder app)
 	{
-		throw new NotImplementedException();
+		app.MapPost("/basket/checkout", async (CheckoutBasketCommand request, ISender sender) =>
+		{
+			var command = request.Adapt<CheckoutBasketCommand>();
+			var result = await sender.Send(command);
+			var response = result.Adapt<CheckoutBasketResponse>();
+			return Results.Ok(response);
+		})
+			.WithName("CheckoutBasket")
+			.Produces<CheckoutBasketResponse>(StatusCodes.Status201Created)
+			.ProducesProblem(StatusCodes.Status400BadRequest)
+			.WithSummary("Checkout Basket")
+			.WithDescription("This endpoint allows you to create a new Checkout Basket.");
 	}
 }
