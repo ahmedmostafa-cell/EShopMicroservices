@@ -25,7 +25,7 @@ public class CheckoutBasketCommandHandler(IBasketRepository basketRepository , I
 		var basket = await basketRepository.GetBasket(command.BasketCheckoutDto.UserName,
 			cancellationToken);
 
-		if(basket != null) 
+		if(basket == null) 
 		{
 			return new CheckoutBasketResult(false);
 		}

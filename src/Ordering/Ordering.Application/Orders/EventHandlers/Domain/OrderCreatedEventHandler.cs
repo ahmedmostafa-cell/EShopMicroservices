@@ -1,6 +1,8 @@
-﻿namespace Ordering.Application.Orders.EventHandlers.Domain;
+﻿using Microsoft.FeatureManagement;
 
-public class OrderCreatedEventHandler(IPublishEndpoint publishEndpoint,
+namespace Ordering.Application.Orders.EventHandlers.Domain;
+
+public class OrderCreatedEventHandler(IPublishEndpoint publishEndpoint, IFeatureManager  featureManager,
     ILogger<OrderCreatedEventHandler> logger)
     : INotificationHandler<OrderCreateEvent>
 {
@@ -9,8 +11,12 @@ public class OrderCreatedEventHandler(IPublishEndpoint publishEndpoint,
     {
         logger.LogInformation("Domain Event Handled: {Domain Event}",domainEvent.GetType().Name);
 
-        var orderCreatedIntegrationEvent = domainEvent.order.ToOrderDto();
+        if(await featureManager.IsEnabledAsync("OrderFullfilment")) 
+        {
+			var orderCreatedIntegrationEvent = domainEvent.order.ToOrderDto();
 
-        await publishEndpoint.Publish(orderCreatedIntegrationEvent, cancellationToken);
+			await publishEndpoint.Publish(orderCreatedIntegrationEvent, cancellationToken);
+		}
+       
     }
 }
