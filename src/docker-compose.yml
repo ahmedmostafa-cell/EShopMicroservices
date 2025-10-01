@@ -34,6 +34,12 @@ services:
       context: .
       dockerfile: Discount/Discount.Grpc/Dockerfile
 
+ order.api:
+  image: ${DOCKER_REGISTRY-}orderapi
+  build:
+      context: .
+      dockerfile: Ordering/Ordering.API/Dockerfile
+
 volumes:
  postgres_catalog:
  postgres_basket:
