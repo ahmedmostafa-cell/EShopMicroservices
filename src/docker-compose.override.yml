@@ -78,7 +78,7 @@ services:
    - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=basketdb;User Id=postgres;Password=postgres;Include Error Detail=True
    - ConnectionStrings__Redis=distributedcash:6379
    - GrpcSettings__DiscountUrl=https://discount.grpc:8081
-   - MessageBroker__Host=amqp://messagebroker:5672
+   - MessageBroker__Host=amqp://ecommerce-mq:5672
    - MessageBroker__UserName=guest
    - MessageBroker__Password=guest
 
@@ -119,7 +119,7 @@ services:
    - ASPNETCORE_HTTP_PORTS=8080
    - ASPNETCORE_HTTPS_PORTS=8081
    - ConnectionStrings__Database=Server=orderdb,1433;Database=orderdb;User Id=SA;Password=2812008a1A@@@@@@@@;TrustServerCertificate=True;Encrypt=False;
-   - MessageBroker__Host=amqp://messagebroker:5672
+   - MessageBroker__Host=amqp://ecommerce-mq:5672
    - MessageBroker__UserName=guest
    - MessageBroker__Password=guest
   depends_on:
