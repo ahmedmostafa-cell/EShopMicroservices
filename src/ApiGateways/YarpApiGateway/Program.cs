@@ -9,9 +9,9 @@ builder.Services.AddReverseProxy()
 builder.Services.AddRateLimiter(rateLimiterOptions =>
 {
     rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
-    {
-        options.PermitLimit = 5;
-        options.Window = TimeSpan.FromSeconds(10);
+	{
+		options.Window = TimeSpan.FromSeconds(10);
+		options.PermitLimit = 5;
     });
 });
 
