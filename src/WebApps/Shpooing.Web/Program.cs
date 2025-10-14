@@ -1,7 +1,12 @@
+using Refit;
+using Shpooing.Web.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddRefitClient<ICatalogService>();
 
 var app = builder.Build();
 
