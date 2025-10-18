@@ -33,6 +33,6 @@ public class IndexModel (ILogger<IndexModel> logger , ICatalogService catalogSer
         
         var result = await basketService.StoreBasketRequest(request);
 
-        return RedirectToPage("cart");
+        return RedirectToPage("Cart");
     }
 }
