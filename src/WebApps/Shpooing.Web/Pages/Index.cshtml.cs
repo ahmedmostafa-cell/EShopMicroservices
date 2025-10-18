@@ -19,7 +19,7 @@ public class IndexModel (ILogger<IndexModel> logger , ICatalogService catalogSer
         logger.LogInformation("add to cart button clicked");
         var product = await catalogService.GetProductsById(productId);
 
-        var basket= await LoadUserBasket(basketService);
+        var basket= await basketService.LoadUserBasket();
         basket.Items.Add(new ShoppingCartItemModel
         {
             ProductId = productId,
@@ -34,12 +34,5 @@ public class IndexModel (ILogger<IndexModel> logger , ICatalogService catalogSer
         var result = await basketService.StoreBasketRequest(request);
 
         return RedirectToPage("cart");
-    }
-
-    private static async Task<ShoppingCartModel> LoadUserBasket(IBasketService basketService)
-    {
-        var userName = "swn";
-        var basket = await basketService.GetBasket(userName);
-        return basket.Cart ?? new ShoppingCartModel { UserName = userName };
     }
 }
