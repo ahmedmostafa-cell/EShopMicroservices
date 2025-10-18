@@ -1,19 +1,45 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Shpooing.Web.Pages;
 
-public class IndexModel : PageModel
+public class IndexModel (ILogger<IndexModel> logger , ICatalogService catalogService , IBasketService basketService) : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    public IEnumerable<ProductModel> ProductList { get; set; } = new List<ProductModel>();
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public async Task<IActionResult> OnGetAsync()
     {
-        _logger = logger;
+        logger.LogInformation("index page is visited");
+        var result = await catalogService.GetProducts();
+        ProductList = result.Products;
+
+        return Page();
     }
 
-    public void OnGet()
+    public async Task<IActionResult> OnPostAddToCartAsync(Guid productId)
     {
+        logger.LogInformation("add to cart button clicked");
+        var product = await catalogService.GetProductsById(productId);
 
+        var basket= await LoadUserBasket(basketService);
+        basket.Items.Add(new ShoppingCartItemModel
+        {
+            ProductId = productId,
+            ProductName = product.Product.Name,
+            Price = product.Product.Price,
+            Quantity = 1,
+            Color = "Black"
+        });
+       
+        StoreBasketRequest request = new StoreBasketRequest(basket);
+        
+        var result = await basketService.StoreBasketRequest(request);
+
+        return RedirectToPage("cart");
+    }
+
+    private static async Task<ShoppingCartModel> LoadUserBasket(IBasketService basketService)
+    {
+        var userName = "swn";
+        var basket = await basketService.GetBasket(userName);
+        return basket.Cart ?? new ShoppingCartModel { UserName = userName };
     }
 }

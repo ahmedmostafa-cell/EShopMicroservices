@@ -9,6 +9,9 @@ builder.Services
 	.AddRefitClient<ICatalogService>()
 	.ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GateWayAddress"]!));
 
+builder.Services
+    .AddRefitClient<IBasketService>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GateWayAddress"]!));
 
 var app = builder.Build();
 
