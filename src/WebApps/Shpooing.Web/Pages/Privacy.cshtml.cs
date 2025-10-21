@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
-namespace Shpooing.Web.Pages;
+﻿namespace Shpooing.Web.Pages;
 
 public class PrivacyModel : PageModel
 {
