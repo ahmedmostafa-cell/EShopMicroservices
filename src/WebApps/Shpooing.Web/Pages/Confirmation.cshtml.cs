@@ -2,7 +2,14 @@ namespace Shpooing.Web.Pages;
 
 public class ConfirmationModel : PageModel
 {
-    public void OnGet()
+	public string Message { get; set; } = default!;
+	public void OnGetContact()
     {
-    }
+		Message = "Your email was sent.";
+	}
+
+	public void OnGetOrderSubmitted()
+	{
+		Message = "Your order submiteed successfully.";
+	}
 }

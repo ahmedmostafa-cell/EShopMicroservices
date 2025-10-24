@@ -26,6 +26,6 @@ IBasketService basketService) : PageModel
         Order.UserName = Cart.UserName;
         Order.CustomerId = new Guid("b4c23a11-0a02-4761-9cd4-7d7a37b1091f");
         var response = await basketService.CheckoutBasket(new CheckoutBasketRequest(Order));
-        return RedirectToPage("Confirmation", "Order Submitted");
+        return RedirectToPage("Confirmation", "OrderSubmitted");
     }
 }
