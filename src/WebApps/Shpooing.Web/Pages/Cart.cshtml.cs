@@ -6,9 +6,18 @@ public class CartModel(IBasketService basketService , ILogger<CartModel> logger)
     public async Task<IActionResult>  OnGetAsync()
     {
         logger.LogInformation("cart page is visited");
-        Cart = await basketService.LoadUserBasket();
+        try 
+        {
+			Cart = await basketService.LoadUserBasket();
 
-        return Page();
+		}
+        catch(Exception ex) 
+        {
+
+        }
+
+
+		return Page();
     }
 
     public async Task<IActionResult> OnPostRemovetocartAsync(Guid productId)

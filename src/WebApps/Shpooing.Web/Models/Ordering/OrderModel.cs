@@ -2,14 +2,14 @@
 
 public class OrderModel
 {
-	public Guid Id { get; private set; } = default!;
-	public Guid CustomerId { get; private set; } = default!;
-	public string OrderName { get; private set; } = default!;
-	public AddressModel ShippingAddress { get; private set; } = default!;
-	public AddressModel BillingAddress { get; private set; } = default!;
-	public PaymentModel Payment { get; private set; } = default!;
-	public OrderStatus Status { get; private set; } = default!;
-	public List<OrderItemModel> OrderItems { get; private set; } = default!;
+	public Guid Id { get;  set; } = default!;
+	public Guid CustomerId { get;  set; } = default!;
+	public string OrderName { get;  set; } = default!;
+	public AddressModel ShippingAddress { get;  set; } = default!;
+	public AddressModel BillingAddress { get;  set; } = default!;
+	public PaymentModel Payment { get;  set; } = default!;
+	public OrderStatus Status { get;  set; } = default!;
+	public List<OrderItemModel> OrderItems { get;  set; } = default!;
 }
 
 public enum OrderStatus
