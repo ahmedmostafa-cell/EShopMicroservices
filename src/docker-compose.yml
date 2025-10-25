@@ -46,10 +46,17 @@ services:
       context: .
       dockerfile: ApiGateways/YarpApiGateway/Dockerfile
 
+ shpooing.web:
+    image: ${DOCKER_REGISTRY-}shpooingweb
+    build:
+      context: .
+      dockerfile: WebApps/Shpooing.Web/Dockerfile
+
 volumes:
  postgres_catalog:
  postgres_basket:
  discountdata:
+
 
 
 
